@@ -7,32 +7,32 @@ namespace Hangman.Core.Game
     {
         private GallowsRenderer _renderer;
 
-        public HangmanGame ()
+        public HangmanGame()
         {
-           _renderer = new GallowsRenderer();
+            _renderer = new GallowsRenderer();
         }
         private string _Guessword;
         private string _mysteryWord;
         int lives = 6;
 
 
-        public HangmanGame( string mysteryWord)
+        public HangmanGame(string mysteryWord)
         {
             string _mysteryWord = mysteryWord;
 
-            for (int index = 0; index < _mysteryWord.Length; index++) 
+            for (int index = 0; index < _mysteryWord.Length; index++)
             {
                 _Guessword += "*";
             }
             _renderer = new GallowsRenderer();
             {
 
-               string GetmysteryWord()
+                string GetmysteryWord()
                 {
                     return _mysteryWord;
 
                 }
-                
+
             }
         }
         public void AddGuess(char letter)
@@ -54,7 +54,7 @@ namespace Hangman.Core.Game
         public void Run()
         {
             Console.WriteLine("");
-         _renderer.Render(5, 5, 6);
+            _renderer.Render(5, 5, 6);
 
             Console.SetCursorPosition(0, 20);
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -65,7 +65,7 @@ namespace Hangman.Core.Game
             Console.ForegroundColor = ConsoleColor.Green;
 
             Console.Write("What is your next guess: ");
-            var nextGuess = Console.ReadLine(); 
+            var nextGuess = Console.ReadLine();
         }
 
         public void PlayGame()
@@ -83,12 +83,12 @@ namespace Hangman.Core.Game
 
             string mysteryWord = listwords[idx];
             char[] guess = new char[mysteryWord.Length];
-            
-                Console.Write("Please enter your guess: ");
+
+            Console.Write("Please enter your guess: ");
 
             for (int p = 0; p < mysteryWord.Length; p++)
                 guess[p] = '*';
-              
+
             while (true)
             {
                 char playerGuess = char.Parse(Console.ReadLine());
@@ -96,28 +96,35 @@ namespace Hangman.Core.Game
                 {
                     if (playerGuess == mysteryWord[j])
                         guess[j] = playerGuess;
-                    if(playerGuess != mysteryWord[j])
+                    if (playerGuess != mysteryWord[j])
                     {
-                        _renderer.Render(5, 5,lives);
+
                         lives--;
+                        _renderer.Render(5, 5, lives);
                     }
                 }
-                Console.WriteLine(guess);
-            }
-                
-            
-                for (int index = 20; index < 0; index++) ;
+                Console.WriteLine("You've guessed right! {0}", "Play again ");
+
+                if (lives == 0)
                 {
-                
-
-
-
+                    Console.WriteLine("You loose.");
                 }
-                
+                else if (lives == 1)
+                {
+                    Console.WriteLine("You win!", guess);
 
+                    _renderer.Render(5, 5, lives);
+                }
+
+
+                for (int index = 20; index < 0; index++) ;
             }
 
-            
+
+        }
+
+
 
     }
-}
+
+    }
